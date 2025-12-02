@@ -35,9 +35,12 @@ pipeline {
                     echo "Test stage"
                     if [ -d "build" ]; then
                         echo "build exists"
+                        npm test
                     else
-                        echo "build does not exist"                   
-                    npm test
+                        echo "build does not exist" 
+                        exit 1
+                    fi                  
+                    
                 '''
             }
         }
