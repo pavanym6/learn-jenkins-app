@@ -27,7 +27,7 @@ pipeline {
                 
                 sh '''
                     echo "Test stage"
-                    test -d build
+                    test -d buildsss
                     echo "build exists"
                 '''
             }
