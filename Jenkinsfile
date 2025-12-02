@@ -33,7 +33,7 @@ pipeline {
                 
                 sh '''
                     echo "Test stage"
-                    if [ -d "build"]; then
+                    if [ -d "build" ]; then
                         echo "build exists"
                     else
                         echo "build does not exist"                   
