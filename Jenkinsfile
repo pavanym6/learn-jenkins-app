@@ -23,12 +23,20 @@ pipeline {
             }
         }
         stage ('Test'){
+            agent {
+                docker {
+                    image 'node:18-alpine'
+                    reuseNode true
+                }
+            }
             steps {
                 
                 sh '''
                     echo "Test stage"
-                    test -d build
-                    echo "build exists"
+                    if [ -d "build"]; then
+                        echo "build exists"
+                    else
+                        echo "build does not exist"                   
                     npm test
                 '''
             }
