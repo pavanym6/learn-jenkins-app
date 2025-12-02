@@ -29,6 +29,7 @@ pipeline {
                     echo "Test stage"
                     test -d build
                     echo "build exists"
+                    npm test
                 '''
             }
         }
