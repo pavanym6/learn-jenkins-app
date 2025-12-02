@@ -33,11 +33,11 @@ pipeline {
                 
                 sh '''
                     echo "Test stage"
-                    if [ -d "build/index.html" ]; then
-                        echo "index.html exists"
+                    if [ -d "build" ]; then
+                        echo "build exists"
                         npm test
                     else
-                        echo "index.html does not exist" 
+                        echo "build does not exist" 
                         exit 1
                     fi                  
                     
