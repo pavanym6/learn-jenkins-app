@@ -108,14 +108,13 @@ pipeline {
                     reuseNode true
                 }
             }
+
+            environment{
+                CI_ENVIRONMENT_URL = 'https://darling-gecko-a85a00.netlify.app'
+            }
             steps {
                 sh '''
-                    npm install serve
-                    node_modules/.bin/serve -s build &
-                    SERVER_PID=$!
-                    sleep 10
                     npx playwright test --reporter=junit,html --output=test-results
-                    kill $SERVER_PID
                 '''
             }
             post {
