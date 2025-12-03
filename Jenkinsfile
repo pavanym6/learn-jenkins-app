@@ -61,20 +61,20 @@ pipeline {
                             node_modules/.bin/serve -s build &
                             SERVER_PID=$!
                             sleep 10
-                            npx playwright test --reporter=junit,html --output=test-results                            
+                            npx playwright test --reporter=junit,html --output=test-results
                             kill $SERVER_PID
                         '''
                     }
                     post {
                         always {
                             junit 'jest-results/junit.xml'
-                            publishHTML([                              
+                            publishHTML([
                                 allowMissing: false,
                                 alwaysLinkToLastBuild: true,
                                 keepAll: true,
                                 reportDir: 'playwright-report',
                                 reportFiles: 'index.html',
-                                reportName: 'Playwright HTML Report'
+                                reportName: 'Playwright local Report'
                             ])
                         }
                     }
@@ -98,6 +98,38 @@ pipeline {
                     node_modules/.bin/netlify status
                     node_modules/.bin/netlify deploy --dir=build --prod
                 '''
+            }
+        }
+
+        stage('prod E2E') {
+            agent {
+                docker {
+                    image 'mcr.microsoft.com/playwright:v1.39.0-jammy'
+                    reuseNode true
+                }
+            }
+            steps {
+                sh '''
+                    npm install serve
+                    node_modules/.bin/serve -s build &
+                    SERVER_PID=$!
+                    sleep 10
+                    npx playwright test --reporter=junit,html --output=test-results
+                    kill $SERVER_PID
+                '''
+            }
+            post {
+                always {
+                    junit 'jest-results/junit.xml'
+                    publishHTML([
+                        allowMissing: false,
+                        alwaysLinkToLastBuild: true,
+                        keepAll: true,
+                        reportDir: 'playwright-report',
+                        reportFiles: 'index.html',
+                        reportName: 'Playwright E2E Report'
+                    ])
+                }
             }
         }
     }
