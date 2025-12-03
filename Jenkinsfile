@@ -56,16 +56,13 @@ pipeline {
                             node_modules/.bin/serve -s build &
                             SERVER_PID=$!
                             sleep 10
-                            npx playwright test \
-                              --reporter=junit,html \
-                              --output=test-results \
-                              --reporter-options junitOutputFile=test-results/junit.xml
+                            npx playwright test --reporter=junit,html --output=test-results                            
                             kill $SERVER_PID
                         '''
                     }
                     post {
                         always {
-                            junit 'test-results/junit.xml'
+                            junit 'jest-results/junit.xml'
                             publishHTML([                              
                                 allowMissing: false,
                                 alwaysLinkToLastBuild: true,
