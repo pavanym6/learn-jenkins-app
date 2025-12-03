@@ -54,7 +54,10 @@ pipeline {
                             node_modules/.bin/serve -s build &
                             SERVER_PID=$!
                             sleep 10
-                            npx playwright test --reporter=junit,html --output=playwright-report
+                            npx playwright test \
+                              --reporter=junit,html \
+                              --output=test-results \
+                              --reporter-options junitOutputFile=test-results/junit.xml
                             kill $SERVER_PID
                         '''
                     }
