@@ -37,6 +37,7 @@ pipeline {
                     }
                     steps {
                         sh '''
+                            echo "small change"
                             npm test -- --reporters=jest-junit
                         '''
                     }
