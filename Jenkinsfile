@@ -32,15 +32,8 @@ pipeline {
             steps {
                 
                 sh '''
-                    echo "Test stage"
-                    if [ -d "build" ]; then
-                        echo "build exists"
-                        npm test
-                    else
-                        echo "build does not exist" 
-                        exit 1
-                    fi                  
-                    
+                    test -f build/index.html
+                    npm test                   
                 '''
             }
         }
