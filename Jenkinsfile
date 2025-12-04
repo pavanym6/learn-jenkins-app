@@ -3,11 +3,11 @@ pipeline {
     agent any
     environment {
         NETLIFY_SITE_ID = 'da9292d5-61d3-418b-ac6c-454259a9f8c9'
-        NETLIFY_AUTH_TOKEN = credentials('netlify-token')
+        NETLIFY_AUTH_TOKEN = credentials('jenkinstoken')
     }
 
     stages {
-        /*
+        
         stage('Build') {
             agent {
                 docker {
@@ -24,7 +24,7 @@ pipeline {
                 '''
             }
         }
-        */
+        
 
         stage('Tests') {
             parallel {
